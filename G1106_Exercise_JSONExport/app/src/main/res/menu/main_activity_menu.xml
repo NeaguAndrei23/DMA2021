@@ -6,4 +6,6 @@
         android:title="Add Movie" />
     <item android:id="@+id/about_menu_item"
         android:title="About" />
+    <item android:id="@+id/export_json_menu_item"
+        android:title="Export JSON" />
 </menu>

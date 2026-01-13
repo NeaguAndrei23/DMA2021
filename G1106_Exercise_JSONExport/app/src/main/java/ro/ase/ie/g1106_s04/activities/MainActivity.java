@@ -20,12 +20,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import ro.ase.ie.g1106_s04.R;
 import ro.ase.ie.g1106_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1106_s04.database.DatabaseManager;
 import ro.ase.ie.g1106_s04.database.MovieDAO;
 import ro.ase.ie.g1106_s04.model.Movie;
+import ro.ase.ie.g1106_s04.utils.MovieJsonParser;
 
 public class MainActivity extends AppCompatActivity implements IMovieEventListener{
 
@@ -100,7 +105,33 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                     "DMA2025 - G1106!",
                     Toast.LENGTH_LONG).show();
         }
+
+        else if(item.getItemId() == R.id.export_json_menu_item)
+        {
+            exportMoviesToJson();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void exportMoviesToJson() {
+        ArrayList<Movie> moviesToExport = movieAdapter.getMoviesForExport();
+        if(moviesToExport.isEmpty())
+        {
+            Toast.makeText(this,"No movies for exporting selected",Toast.LENGTH_SHORT);
+            return;
+        }
+        String jsonString = MovieJsonParser.toJson(moviesToExport);
+
+        try {
+            FileOutputStream fos = openFileOutput("movies_export.json",MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+            osw.write(jsonString);
+            osw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
