@@ -1,0 +1,35 @@
+[
+    {
+        "title": "Manifest",
+        "genre": "Drama",
+        "budget": 1200.2,
+        "release": "12-12-2022",
+        "guidance": "R",
+        "rating": 2.5,
+        "duration": "120",
+        "watched": true,
+        "posterUrl": "https://film-book.com/wp-content/uploads/2021/02/manifest-season-two-tv-show-poster-banner-01-700x400-1.jpg"
+    },
+    {
+        "title": "Extraction",
+        "genre": "Action",
+        "release": "11-11-2022",
+        "budget": 1200.2,
+        "rating": 2.5,
+        "guidance": "R",
+        "watched": true,
+        "duration": "68",
+        "posterUrl": "https://posters.movieposterdb.com/23_07/2020/8936646/l_extraction-movie-poster_dae066e7.jpg"
+    },
+    {
+        "title": "Enola",
+        "budget": 1200.2,
+        "genre": "Adventure",
+        "rating": 2.5,
+        "release": "10-10-2022",
+        "duration": "90",
+        "guidance": "R",
+        "watched": true,
+        "posterUrl": "https://www.shutterstock.com/editorial/image-editorial/M4T1A543O8D1Me3aMzY1NzE=/enola-holmes-2020-poster-art-clockwise-top-1500w-10793162i.jpg"
+    }
+]
