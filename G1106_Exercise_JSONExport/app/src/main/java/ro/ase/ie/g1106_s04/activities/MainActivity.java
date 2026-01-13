@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         ArrayList<Movie> moviesToExport = movieAdapter.getMoviesForExport();
         if(moviesToExport.isEmpty())
         {
-            Toast.makeText(this,"No movies for exporting selected",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"No movies for exporting selected",Toast.LENGTH_SHORT).show();
             return;
         }
         String jsonString = MovieJsonParser.toJson(moviesToExport);
