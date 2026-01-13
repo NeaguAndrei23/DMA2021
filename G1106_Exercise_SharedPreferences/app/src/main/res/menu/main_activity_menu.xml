@@ -4,6 +4,10 @@
 
     <item android:id="@+id/add_movie_menu_item"
         android:title="Add Movie" />
+    <item android:id="@+id/settings_menu_item"
+        android:title="Settings" />
+    <item android:id="@+id/delete_except_favorite_menu_item"
+        android:title="Delete Except Favorite" />
     <item android:id="@+id/about_menu_item"
         android:title="About" />
 </menu>

@@ -1,6 +1,7 @@
 package ro.ase.ie.g1106_s04.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
 
     private static final int ADD_MOVIE = 100;
     private static final int UPDATE_MOVIE = 200;
+
+    // SharedPreferences constants
+    private static final String PREFS_NAME = "movie_prefs";
+    private static final String KEY_FAVORITE = "favorite_movie";
     private ActivityResultLauncher<Intent> launcher;
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
@@ -94,6 +99,16 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
             intent.putExtra("action_code", ADD_MOVIE);
             launcher.launch(intent);
         }
+        else if(item.getItemId() == R.id.settings_menu_item)
+        {
+            // Open Settings Activity
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.delete_except_favorite_menu_item)
+        {
+            deleteAllExceptFavorite();
+        }
         else if(item.getItemId() == R.id.about_menu_item)
         {
             Toast.makeText(MainActivity.this,
@@ -101,6 +116,46 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                     Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllExceptFavorite() {
+        // 1. Read favorite movie title from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String favoriteTitle = prefs.getString(KEY_FAVORITE, null);
+
+        // 2. Check if favorite is set
+        if (favoriteTitle == null || favoriteTitle.isEmpty()) {
+            Toast.makeText(this, "No favorite movie set! Go to Settings first.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 3. Collect movies to delete (can't modify list while iterating)
+        ArrayList<Movie> moviesToDelete = new ArrayList<>();
+
+        for (Movie movie : movieList) {
+            if (!movie.getTitle().equals(favoriteTitle)) {
+                moviesToDelete.add(movie);
+            }
+        }
+
+        // 4. Check if favorite exists in list
+        if (moviesToDelete.size() == movieList.size()) {
+            Toast.makeText(this, "Favorite movie '" + favoriteTitle + "' not found in list!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 5. Delete from database and list
+        for (Movie movie : moviesToDelete) {
+            movieTable.deleteMovie(movie);
+            movieList.remove(movie);
+        }
+
+        // 6. Update UI
+        movieAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Deleted " + moviesToDelete.size() + " movies. Kept: " + favoriteTitle,
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.G1106_S04">
         <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MovieActivity"
             android:exported="false" />
         <activity
