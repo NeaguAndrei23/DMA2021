@@ -28,7 +28,32 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         this.movieArrayList = movieArrayList;
         this.options = new HashMap<>();
     }
-
+    public ArrayList<Movie> getMoviesForExport()
+    {
+        ArrayList<Movie> exportList = new ArrayList<>();
+        for(Movie movie: options.keySet())
+        {
+            Integer option = options.get(movie);
+            if(option!= null && option == R.id.rbExport)
+            {
+                exportList.add(movie);
+            }
+        }
+        return exportList;
+    }
+    public ArrayList<Movie> getMoviesForImport()
+    {
+        ArrayList<Movie> importList = new ArrayList<>();
+        for(Movie movie:options.keySet())
+        {
+            Integer option = options.get(movie);
+            if(option!=null && option== R.id.rbPersist)
+            {
+                importList.add(movie);
+            }
+        }
+        return importList;
+    }
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
